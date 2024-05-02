@@ -3,7 +3,7 @@
 public class CameraRotation : MonoBehaviour
 {
     [SerializeField] private float rotationSpeed = 0.2f;    //toc do quay
-    [SerializeField] private float scrollSpeed = 10f;
+    [SerializeField] private float scrollSpeed = 1f;
     private new Camera camera;
 
     public static CameraRotation instance;
@@ -27,8 +27,8 @@ public class CameraRotation : MonoBehaviour
         transform.Rotate(Vector3.down, -xAxisRotation * rotationSpeed); //quay camera
     }
     
-    public void ZoomCamera(Vector2 scrollPos)
+    public void ZoomCamera(float scrollPos)
     {
-        camera.fieldOfView -= scrollPos.y * scrollSpeed;
+        camera.fieldOfView -= scrollPos * scrollSpeed * 0.1f;
     }
 }

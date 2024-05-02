@@ -51,7 +51,28 @@ public class InputManager : MonoBehaviour
 
     private void LateUpdate()
     {
-        CameraRotation.instance.ZoomCamera(Input.mouseScrollDelta);
+        if (Input.touchSupported)
+        {
+            if (Input.touchCount == 2)
+            {
+                Touch tZero = Input.GetTouch(0);
+                Touch tOne = Input.GetTouch(1);
+                
+                Vector2 tZeroPrevious = tZero.position - tZero.deltaPosition;
+                Vector2 tOnePrevious = tOne.position - tOne.deltaPosition;
+                
+                float oldTouchDistance = Vector2.Distance (tZeroPrevious, tOnePrevious);
+                float currentTouchDistance = Vector2.Distance (tZero.position, tOne.position);
+                
+                float deltaDistance = oldTouchDistance - currentTouchDistance;
+                
+                CameraRotation.instance.ZoomCamera(deltaDistance);
+            }
+        }
+        else
+        {
+            CameraRotation.instance.ZoomCamera(Input.mouseScrollDelta.y);
+        }
     }
 
     void GetDistance()// Tinh khoang cach khi click chuot va qua bong
